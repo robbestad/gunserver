@@ -12,8 +12,8 @@
     "url": "git+https://github.com/amark/gun.git"
   },
   "keywords": [
-	"gun",
-	"gunDB",
+    "gun",
+    "gunDB",
     "graph",
     "document",
     "key",
@@ -44,7 +44,9 @@
   },
   "dependencies": {
     "aws-sdk": "~>2.0.0",
+    "express": "^4.14.0",
     "formidable": "~>1.0.15",
+    "gun": "latest",
     "ws": "~>1.0.1"
   },
   "devDependencies": {
