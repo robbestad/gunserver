@@ -2,8 +2,8 @@ var path = require('path');
 var http = require('http');
 var fs = require('fs');
 
-var port = process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 8080;
-var ip = process.env.HOST || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 8080;
+var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var Gun = require('gun');
 var gun = Gun({
