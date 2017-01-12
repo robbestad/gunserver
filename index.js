@@ -1,23 +1,30 @@
-var http = require('http')
+var path = require('path');
+var http = require('http');
+var fs = require('fs');
 
-// import gun
-var Gun = require('gun')
+var port = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 8080;
+var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-// create a new gun instance
-var gun = new Gun()
+var Gun = require('gun');
+var gun = Gun({
+	file: 'data.json',
+	s3: {
+		key: '', // AWS Access Key
+		secret: '', // AWS Secret Token
+		bucket: '' // The bucket you want to save into
+	}
+});
 
-// create a new server instance
-var server = new http.Server()
+var server = http.createServer(function(req, res){
+	if(gun.wsp.server(req, res)){
+		return; // filters gun requests!
+	}
+	fs.createReadStream(path.join(__dirname, req.url)).on('error',function(){ // static files!
+		res.writeHead(200, {'Content-Type': 'text/html'});
+		res.end(fs.readFileSync(path.join(__dirname, 'index.html'))); // or default to index
+	}).pipe(res); // stream
+});
+gun.wsp(server);
+server.listen(port, ip);
 
-// add the /gun.js route to your server
-server.on('request', gun.wsp.server)
-
-/*
-  Handle incoming gun traffic
-  from clients (that's where the
-  real-time goodness comes from).
-*/
-gun.wsp(server)
-
-// start listening for requests on `localhost:8080`
-server.listen(3666);
+console.log('Server started on port', port, 'with /gun');
