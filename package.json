@@ -1,16 +1,17 @@
 {
-  "name": "graphdb",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "gun": "^0.3.9991",
-    "gun-server": "^1.0.0"
-  }
+	"name": "examples",
+	"main": "http.js",
+	"description": "Example gun apps"
+,	"version": "0.0.3"
+,	"engines": {
+		"node": "~>0.10.x"
+	}
+,	"dependencies": {
+		"express": "~>4.13.4",
+		"gun": "~>0.3.0"
+	}
+,	"scripts": {
+        "start": "node http.js",
+        "test": "mocha"
+    }
 }
